@@ -9,7 +9,7 @@ from mlProject.entity.config_entity import DataValidationConfig
 import pandas as pd
 
 class DataValidation:
-  def __init__(self, config = DataValidationConfig):
+  def __init__(self, config: DataValidationConfig):
     self.config = config
 
   def validate_all_columns(self) -> bool:
@@ -20,7 +20,7 @@ class DataValidation:
       names = list(data.columns)
       types = list(data.dtypes)
       
-      all_schema_cols = self.config.all_schema['COLUMNS']
+      all_schema_cols = self.config.all_schema
       schema_keys = self.config.all_schema.keys()
 
       for i in range (len(names)-1):
@@ -32,9 +32,10 @@ class DataValidation:
 
       with open(self.config.STATUS_FILE, "w") as f:
         f.write(f"Status: {validation_status}")
-
+      
+      logger.info(f"{validation_status, self.config.STATUS_FILE}")
 
       return validation_status
           
     except Exception as e:
-      e
+      raise e
