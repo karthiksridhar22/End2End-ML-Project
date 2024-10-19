@@ -4,6 +4,8 @@ from mlProject.config.configuration import ConfigurationManager
 from mlProject.pipeline.stage_01_data_ingestion import DataIngestionTrainingPipeliine
 from mlProject.pipeline.stage_02_data_validation import DataValidationTrainingPipeline
 from mlProject.pipeline.stage_03_data_transformation import DataTransformationPipeline
+from mlProject.pipeline.stage_04_model_trainer import ModelTrainerPipeline
+from mlProject.pipeline.stage_05_model_evaluation import ModelEvaluationPipeline
 
 STAGE_NAME = "Data Ingestion Stage"
 try:
@@ -38,12 +40,18 @@ except Exception as e:
 STAGE_NAME = "Model Trainer Stage"
 try: 
   logger.info(f">>>>>>> Stage {STAGE_NAME} started <<<<<<<<")
-  config = ConfigurationManager()
-  model_trainer_config = config.get_model_trainer_config()
-  model_trainer = ModelTrainer(config=model_trainer_config)
-  model_trainer.train()
+  model_trainer = ModelTrainerPipeline()
+  model_trainer.main()
   logger.info(f">>>>>>> Stage {STAGE_NAME} completed <<<<<<<<") 
 except Exception as e:
   e
 
+STAGE_NAME = "Model Evaluation Stage"
+try:
+  logger.info(f">>>>> Stage {STAGE_NAME} started")
+  obj = ModelEvaluationPipeline()
+  obj.main()
+  logger.info(f">>>>> Stage {STAGE_NAME} completed")
+except Exception as e:
+  logger.exception(e)
 

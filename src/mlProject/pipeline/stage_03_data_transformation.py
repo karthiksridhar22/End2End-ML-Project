@@ -33,3 +33,13 @@ class DataTransformationPipeline:
       
     except Exception as e:
       e
+
+
+if __name__ == '__main__':
+  try:
+    logger.info(f">>>>> Stage {STAGE_NAME} started")
+    obj = DataTransformationPipeline
+    obj.main()
+    logger.info(f">>>>> Stage {STAGE_NAME} completed")
+  except Exception as e:
+    logger.exception(e)
